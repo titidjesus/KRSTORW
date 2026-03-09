@@ -3,61 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Meu Site</title>
+<title>KRSTORW | Loja Masculina</title>
 
 <style>
 
 body{
-font-family: Arial, sans-serif;
+font-family:Arial;
 margin:0;
-background:#f4f4f4;
+background:#f5f5f5;
 }
 
 header{
-background:#111;
+background:black;
 color:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
 padding:20px;
-text-align:center;
 }
 
-nav{
-background:#333;
-padding:10px;
-text-align:center;
-}
-
-nav a{
-color:white;
-margin:15px;
-text-decoration:none;
+.logo{
+font-size:24px;
 font-weight:bold;
 }
 
-nav a:hover{
-color:#ffd000;
-}
-
-.container{
-padding:40px;
-text-align:center;
-}
-
-.card{
+.carrinho{
 background:white;
-padding:20px;
-margin:20px auto;
-max-width:600px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
+color:black;
+padding:8px 15px;
+border-radius:20px;
 }
 
-footer{
+.banner{
 background:#111;
 color:white;
 text-align:center;
+padding:60px 20px;
+}
+
+.banner h1{
+font-size:40px;
+margin:0;
+}
+
+.produtos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+padding:40px;
+}
+
+.produto{
+background:white;
 padding:15px;
-margin-top:40px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+.produto img{
+width:100%;
+border-radius:10px;
+}
+
+.preco{
+color:green;
+font-size:22px;
+font-weight:bold;
+}
+
+button{
+background:black;
+color:white;
+border:none;
+padding:10px 15px;
+cursor:pointer;
+border-radius:5px;
+}
+
+button:hover{
+background:#444;
+}
+
+.whatsapp{
+display:inline-block;
+margin-top:10px;
+background:#25D366;
+padding:10px 15px;
+color:white;
+text-decoration:none;
+border-radius:5px;
+}
+
+footer{
+background:black;
+color:white;
+text-align:center;
+padding:30px;
 }
 
 </style>
@@ -66,39 +108,103 @@ margin-top:40px;
 <body>
 
 <header>
-<h1>Meu Primeiro Site</h1>
-<p>Site criado gratuitamente com GitHub</p>
+
+<div class="logo">KRSTORW</div>
+
+<div class="carrinho">
+🛒 Carrinho (<span id="contador">0</span>)
+</div>
+
 </header>
 
-<nav>
-<a href="#">Inicio</a>
-<a href="#">Sobre</a>
-<a href="#">Serviços</a>
-<a href="#">Contato</a>
-</nav>
+<section class="banner">
 
-<div class="container">
+<h1>KRSTORW</h1>
+<p>Moda Masculina Premium</p>
 
-<div class="card">
-<h2>Bem-vindo</h2>
-<p>Esse é meu primeiro site publicado na internet gratuitamente.</p>
+</section>
+
+<section class="produtos">
+
+<div class="produto">
+
+<img src="https://via.placeholder.com/300">
+
+<h3>Camiseta Streetwear</h3>
+
+<p class="preco">R$79,90</p>
+
+<button onclick="addCarrinho()">Adicionar ao carrinho</button>
+
+<br>
+
+<a class="whatsapp" href="https://wa.me/5511999999999">
+Comprar no WhatsApp
+</a>
+
 </div>
 
-<div class="card">
-<h2>Sobre mim</h2>
-<p>Aqui você pode colocar informações sobre você ou seu projeto.</p>
+<div class="produto">
+
+<img src="https://via.placeholder.com/300">
+
+<h3>Moletom Oversized</h3>
+
+<p class="preco">R$149,90</p>
+
+<button onclick="addCarrinho()">Adicionar ao carrinho</button>
+
+<br>
+
+<a class="whatsapp" href="https://wa.me/5511999999999">
+Comprar no WhatsApp
+</a>
+
 </div>
 
-<div class="card">
-<h2>Meus serviços</h2>
-<p>Descreva aqui o que você faz ou vende.</p>
-</div>
+<div class="produto">
+
+<img src="https://via.placeholder.com/300">
+
+<h3>Calça Cargo</h3>
+
+<p class="preco">R$129,90</p>
+
+<button onclick="addCarrinho()">Adicionar ao carrinho</button>
+
+<br>
+
+<a class="whatsapp" href="https://wa.me/5511999999999">
+Comprar no WhatsApp
+</a>
 
 </div>
+
+</section>
 
 <footer>
-<p>© 2026 - Meu Site</p>
+
+<p>Pagamentos aceitos:</p>
+
+<p>💳 Cartão | ⚡ Pix | 💬 WhatsApp</p>
+
+<p>© 2026 KRSTORW</p>
+
 </footer>
+
+<script>
+
+let contador = 0;
+
+function addCarrinho(){
+
+contador++;
+
+document.getElementById("contador").innerText = contador;
+
+}
+
+</script>
 
 </body>
 </html>
