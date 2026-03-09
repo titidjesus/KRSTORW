@@ -111,7 +111,7 @@ right:20px;
 top:80px;
 background:white;
 padding:20px;
-width:250px;
+width:260px;
 box-shadow:0 0 10px rgba(0,0,0,0.3);
 border-radius:10px;
 }
@@ -155,10 +155,6 @@ Adicionar ao carrinho
 
 <br><br>
 
-<a class="whatsapp" href="https://wa.me/5511999999999">
-Comprar no WhatsApp
-</a>
-
 </div>
 
 <div class="produto">
@@ -174,10 +170,6 @@ Adicionar ao carrinho
 </button>
 
 <br><br>
-
-<a class="whatsapp" href="https://wa.me/5511922244160">
-Comprar no WhatsApp
-</a>
 
 </div>
 
@@ -195,10 +187,6 @@ Adicionar ao carrinho
 
 <br><br>
 
-<a class="whatsapp" href="https://wa.me/5511999999999">
-Comprar no WhatsApp
-</a>
-
 </div>
 
 </section>
@@ -209,7 +197,45 @@ Comprar no WhatsApp
 
 <ul id="listaCarrinho"></ul>
 
-<br>
+<p>Subtotal: R$ <span id="subtotal">0</span></p>
+
+<hr>
+
+<label>Frete:</label>
+
+<select id="frete" onchange="calcularTotal()">
+
+<option value="0">Retirada na loja - Grátis</option>
+
+<option value="15">Entrega padrão - R$15</option>
+
+<option value="30">Entrega expressa - R$30</option>
+
+</select>
+
+<p>Frete: R$ <span id="valorFrete">0</span></p>
+
+<h3>Total: R$ <span id="total">0</span></h3>
+
+<hr>
+
+<label>Forma de pagamento:</label>
+
+<select id="pagamento">
+
+<option>Pix</option>
+
+<option>Cartão</option>
+
+<option>WhatsApp</option>
+
+</select>
+
+<br><br>
+
+<button onclick="finalizarCompra()">Finalizar compra</button>
+
+<br><br>
 
 <button onclick="fecharCarrinho()">Fechar</button>
 
@@ -229,6 +255,17 @@ Comprar no WhatsApp
 
 let contador = 0;
 let lista = [];
+let precoProduto = 0;
+
+const precos = {
+
+"Camiseta Streetwear":79.90,
+
+"Moletom Oversized":149.90,
+
+"Calça Cargo":129.90
+
+};
 
 function addCarrinho(produto){
 
@@ -238,7 +275,11 @@ document.getElementById("contador").innerText = contador;
 
 lista.push(produto);
 
+precoProduto += precos[produto];
+
 mostrarLista();
+
+calcularTotal();
 
 }
 
@@ -254,6 +295,20 @@ html += "<li>"+item+"</li>";
 
 document.getElementById("listaCarrinho").innerHTML = html;
 
+document.getElementById("subtotal").innerText = precoProduto.toFixed(2);
+
+}
+
+function calcularTotal(){
+
+let frete = document.getElementById("frete").value;
+
+document.getElementById("valorFrete").innerText = frete;
+
+let total = parseFloat(precoProduto) + parseFloat(frete);
+
+document.getElementById("total").innerText = total.toFixed(2);
+
 }
 
 function abrirCarrinho(){
@@ -265,6 +320,26 @@ document.getElementById("carrinhoBox").style.display = "block";
 function fecharCarrinho(){
 
 document.getElementById("carrinhoBox").style.display = "none";
+
+}
+
+function finalizarCompra(){
+
+let pagamento = document.getElementById("pagamento").value;
+
+let total = document.getElementById("total").innerText;
+
+let mensagem = "Pedido KRSTORW%0A";
+
+lista.forEach(item=>{
+mensagem += item+"%0A";
+});
+
+mensagem += "%0ATotal: R$ "+total;
+
+mensagem += "%0APagamento: "+pagamento;
+
+window.open("https://wa.me/5511922244160?text="+mensagem);
 
 }
 
