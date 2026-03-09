@@ -38,6 +38,7 @@ letter-spacing:4px;
 
 .search{
 width:40%;
+position:relative;
 }
 
 .search input{
@@ -45,6 +46,28 @@ width:100%;
 padding:10px;
 border-radius:20px;
 border:none;
+}
+
+/* sugestões */
+
+#sugestoes{
+position:absolute;
+background:white;
+width:100%;
+top:40px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+display:none;
+z-index:100;
+}
+
+.sugestao{
+padding:10px;
+cursor:pointer;
+}
+
+.sugestao:hover{
+background:#f0f0f0;
 }
 
 .icons{
@@ -65,17 +88,6 @@ justify-content:center;
 color:white;
 font-size:48px;
 font-weight:bold;
-}
-
-/* FILTRO */
-
-.filtro{
-text-align:center;
-margin-top:20px;
-}
-
-.filtro select{
-padding:10px;
 }
 
 /* PRODUTOS */
@@ -159,8 +171,6 @@ display:none;
 text-align:center;
 }
 
-/* CARTÃO */
-
 #cartaoArea{
 display:none;
 margin-top:20px;
@@ -208,7 +218,10 @@ width:100%;
 <div class="logo">KRSTORW</div>
 
 <div class="search">
-<input placeholder="Buscar produtos...">
+<input id="busca" placeholder="Buscar produtos...">
+
+<div id="sugestoes"></div>
+
 </div>
 
 <div class="icons">
@@ -219,18 +232,6 @@ width:100%;
 
 <div class="banner">
 Nova Coleção KRSTORW
-</div>
-
-<div class="filtro">
-
-<select id="filtroPreco" onchange="filtrarPreco()">
-
-<option value="todos">Todos</option>
-<option value="100">Até R$100</option>
-<option value="200">Até R$200</option>
-
-</select>
-
 </div>
 
 <div class="produtos">
@@ -312,11 +313,8 @@ Nova Coleção KRSTORW
 <h3>Pagamento com Cartão</h3>
 
 <input id="nomeCartao" placeholder="Nome no cartão">
-
 <input id="numeroCartao" placeholder="Número do cartão">
-
 <input id="validadeCartao" placeholder="Validade (MM/AA)">
-
 <input id="cvvCartao" placeholder="CVV">
 
 <select id="parcelasCartao">
@@ -342,8 +340,6 @@ Nova Coleção KRSTORW
 
 </div>
 
-<!-- RASTREAMENTO -->
-
 <div class="rastreamento">
 
 <h2>Rastrear Pedido</h2>
@@ -361,6 +357,48 @@ Nova Coleção KRSTORW
 let carrinho=[]
 let subtotal=0
 let frete=0
+
+let produtosLista=["Camiseta Street","Camiseta Black"]
+
+const busca=document.getElementById("busca")
+const sugestoes=document.getElementById("sugestoes")
+
+busca.addEventListener("input",function(){
+
+let valor=this.value.toLowerCase()
+
+sugestoes.innerHTML=""
+
+if(valor===""){
+sugestoes.style.display="none"
+return
+}
+
+let encontrados=produtosLista.filter(p=>p.toLowerCase().includes(valor))
+
+encontrados.forEach(prod=>{
+
+let div=document.createElement("div")
+
+div.className="sugestao"
+
+div.innerText=prod
+
+div.onclick=function(){
+
+busca.value=prod
+
+sugestoes.style.display="none"
+
+}
+
+sugestoes.appendChild(div)
+
+})
+
+sugestoes.style.display="block"
+
+})
 
 function addCarrinho(nome,preco){
 carrinho.push({nome,preco})
@@ -454,17 +492,13 @@ for(let i=1;i<=3;i++){
 
 let valor=(total/i).toFixed(2)
 
-parcelas.innerHTML+=`<option value="${i}">
-${i}x de R$${valor}
-</option>`
+parcelas.innerHTML+=`<option>${i}x de R$${valor}</option>`
 
 }
 
 }else{
 
-parcelas.innerHTML=`<option value="1">
-1x de R$${total}
-</option>`
+parcelas.innerHTML=`<option>1x de R$${total}</option>`
 
 }
 
@@ -472,17 +506,8 @@ parcelas.innerHTML=`<option value="1">
 
 function pagarCartao(){
 
-let nome=document.getElementById("nomeCartao").value
-let numero=document.getElementById("numeroCartao").value
-let validade=document.getElementById("validadeCartao").value
-let cvv=document.getElementById("cvvCartao").value
-
-if(nome=="" || numero=="" || validade=="" || cvv==""){
-alert("Preencha todos os dados do cartão")
-return
-}
-
 let pedido=gerarPedido()
+
 alert("Pagamento aprovado! Pedido Nº "+pedido)
 
 }
@@ -507,42 +532,6 @@ estrelas[i].style.color="gray"
 for(let i=0;i<=Array.from(estrelas).indexOf(el);i++){
 estrelas[i].style.color="gold"
 }
-
-}
-
-const busca=document.querySelector(".search input")
-
-busca.addEventListener("keyup",function(){
-
-let texto=this.value.toLowerCase()
-let produtos=document.querySelectorAll(".produto")
-
-produtos.forEach(p=>{
-
-let nome=p.innerText.toLowerCase()
-
-p.style.display=nome.includes(texto)?"block":"none"
-
-})
-
-})
-
-function filtrarPreco(){
-
-let valor=document.getElementById("filtroPreco").value
-let produtos=document.querySelectorAll(".produto")
-
-produtos.forEach(p=>{
-
-let preco=p.querySelector("p").innerText
-
-if(valor=="todos"){
-p.style.display="block"
-}else{
-p.style.display=(preco<=valor)?"block":"none"
-}
-
-})
 
 }
 
