@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>KRSTORW | Loja Masculina</title>
 
 <style>
@@ -30,8 +31,9 @@ font-weight:bold;
 .carrinho{
 background:white;
 color:black;
-padding:8px 15px;
+padding:10px 15px;
 border-radius:20px;
+cursor:pointer;
 }
 
 .banner{
@@ -102,7 +104,20 @@ text-align:center;
 padding:30px;
 }
 
+#carrinhoBox{
+display:none;
+position:fixed;
+right:20px;
+top:80px;
+background:white;
+padding:20px;
+width:250px;
+box-shadow:0 0 10px rgba(0,0,0,0.3);
+border-radius:10px;
+}
+
 </style>
+
 </head>
 
 <body>
@@ -111,7 +126,7 @@ padding:30px;
 
 <div class="logo">KRSTORW</div>
 
-<div class="carrinho">
+<div class="carrinho" onclick="abrirCarrinho()">
 🛒 Carrinho (<span id="contador">0</span>)
 </div>
 
@@ -134,9 +149,11 @@ padding:30px;
 
 <p class="preco">R$79,90</p>
 
-<button onclick="addCarrinho()">Adicionar ao carrinho</button>
+<button onclick="addCarrinho('Camiseta Streetwear')">
+Adicionar ao carrinho
+</button>
 
-<br>
+<br><br>
 
 <a class="whatsapp" href="https://wa.me/5511999999999">
 Comprar no WhatsApp
@@ -152,11 +169,13 @@ Comprar no WhatsApp
 
 <p class="preco">R$149,90</p>
 
-<button onclick="addCarrinho()">Adicionar ao carrinho</button>
+<button onclick="addCarrinho('Moletom Oversized')">
+Adicionar ao carrinho
+</button>
 
-<br>
+<br><br>
 
-<a class="whatsapp" href="https://wa.me/5511999999999">
+<a class="whatsapp" href="https://wa.me/5511922244160">
 Comprar no WhatsApp
 </a>
 
@@ -170,9 +189,11 @@ Comprar no WhatsApp
 
 <p class="preco">R$129,90</p>
 
-<button onclick="addCarrinho()">Adicionar ao carrinho</button>
+<button onclick="addCarrinho('Calça Cargo')">
+Adicionar ao carrinho
+</button>
 
-<br>
+<br><br>
 
 <a class="whatsapp" href="https://wa.me/5511999999999">
 Comprar no WhatsApp
@@ -182,9 +203,21 @@ Comprar no WhatsApp
 
 </section>
 
+<div id="carrinhoBox">
+
+<h3>Seu Carrinho</h3>
+
+<ul id="listaCarrinho"></ul>
+
+<br>
+
+<button onclick="fecharCarrinho()">Fechar</button>
+
+</div>
+
 <footer>
 
-<p>Pagamentos aceitos:</p>
+<p>Pagamentos aceitos</p>
 
 <p>💳 Cartão | ⚡ Pix | 💬 WhatsApp</p>
 
@@ -195,12 +228,43 @@ Comprar no WhatsApp
 <script>
 
 let contador = 0;
+let lista = [];
 
-function addCarrinho(){
+function addCarrinho(produto){
 
 contador++;
 
 document.getElementById("contador").innerText = contador;
+
+lista.push(produto);
+
+mostrarLista();
+
+}
+
+function mostrarLista(){
+
+let html = "";
+
+lista.forEach(item => {
+
+html += "<li>"+item+"</li>";
+
+});
+
+document.getElementById("listaCarrinho").innerHTML = html;
+
+}
+
+function abrirCarrinho(){
+
+document.getElementById("carrinhoBox").style.display = "block";
+
+}
+
+function fecharCarrinho(){
+
+document.getElementById("carrinhoBox").style.display = "none";
 
 }
 
