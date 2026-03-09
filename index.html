@@ -87,16 +87,6 @@ button:hover{
 background:#444;
 }
 
-.whatsapp{
-display:inline-block;
-margin-top:10px;
-background:#25D366;
-padding:10px 15px;
-color:white;
-text-decoration:none;
-border-radius:5px;
-}
-
 footer{
 background:black;
 color:white;
@@ -114,6 +104,19 @@ padding:20px;
 width:260px;
 box-shadow:0 0 10px rgba(0,0,0,0.3);
 border-radius:10px;
+}
+
+.whatsappBtn{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:white;
+padding:15px;
+border-radius:50%;
+font-size:24px;
+text-decoration:none;
+box-shadow:0 0 10px rgba(0,0,0,0.3);
 }
 
 </style>
@@ -153,8 +156,6 @@ border-radius:10px;
 Adicionar ao carrinho
 </button>
 
-<br><br>
-
 </div>
 
 <div class="produto">
@@ -169,8 +170,6 @@ Adicionar ao carrinho
 Adicionar ao carrinho
 </button>
 
-<br><br>
-
 </div>
 
 <div class="produto">
@@ -184,8 +183,6 @@ Adicionar ao carrinho
 <button onclick="addCarrinho('Calça Cargo')">
 Adicionar ao carrinho
 </button>
-
-<br><br>
 
 </div>
 
@@ -227,8 +224,6 @@ Adicionar ao carrinho
 
 <option>Cartão</option>
 
-<option>WhatsApp</option>
-
 </select>
 
 <br><br>
@@ -245,11 +240,15 @@ Adicionar ao carrinho
 
 <p>Pagamentos aceitos</p>
 
-<p>💳 Cartão | ⚡ Pix | 💬 WhatsApp</p>
+<p>💳 Cartão | ⚡ Pix</p>
 
 <p>© 2026 KRSTORW</p>
 
 </footer>
+
+<a class="whatsappBtn" href="https://wa.me/5511999999999?text=Olá%20tenho%20interesse%20nas%20roupas%20da%20KRSTORW" target="_blank">
+💬
+</a>
 
 <script>
 
