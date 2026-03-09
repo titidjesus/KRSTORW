@@ -6,37 +6,77 @@
 
 <style>
 
-body{
-font-family: Arial;
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
 background:#f5f5f5;
 }
+
+/* HEADER */
 
 header{
 background:black;
 color:white;
-padding:20px;
-text-align:center;
-font-size:28px;
-font-weight:bold;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
 }
 
-.banner{
+.logo{
+font-size:30px;
+font-weight:bold;
+letter-spacing:4px;
+}
+
+.search{
+width:40%;
+}
+
+.search input{
 width:100%;
-height:350px;
-background:url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b') center/cover;
+padding:10px;
+border-radius:20px;
+border:none;
+}
+
+.icons{
+display:flex;
+gap:20px;
+cursor:pointer;
+font-size:20px;
+}
+
+/* BANNER */
+
+.banner{
+height:420px;
+background:url("https://images.unsplash.com/photo-1441986300917-64674bd600d8") center/cover;
 display:flex;
 align-items:center;
 justify-content:center;
 color:white;
-font-size:40px;
+font-size:48px;
 font-weight:bold;
+}
+
+/* PRODUTOS */
+
+.titulo{
+text-align:center;
+margin:40px;
+font-size:30px;
 }
 
 .produtos{
 display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:30px;
 padding:40px;
 }
 
@@ -45,64 +85,73 @@ background:white;
 padding:20px;
 border-radius:10px;
 text-align:center;
+transition:0.3s;
 box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.produto:hover{
+transform:translateY(-5px);
 }
 
 .produto img{
 width:100%;
-height:200px;
+height:220px;
 object-fit:cover;
 border-radius:8px;
 }
 
 button{
-padding:10px 20px;
-border:none;
 background:black;
 color:white;
+border:none;
+padding:10px 20px;
 cursor:pointer;
 margin-top:10px;
 }
 
-button:hover{
-background:#333;
-}
+/* CARRINHO LATERAL */
 
 .carrinho{
 position:fixed;
-right:20px;
-top:20px;
+top:0;
+right:-400px;
+width:350px;
+height:100%;
 background:white;
+box-shadow:-2px 0 10px rgba(0,0,0,0.2);
 padding:20px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
-width:250px;
+transition:0.3s;
+overflow:auto;
+}
+
+.carrinho.active{
+right:0;
 }
 
 .item{
 display:flex;
 justify-content:space-between;
-margin-bottom:10px;
+margin:10px 0;
 }
 
-.whatsapp{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-color:white;
-padding:15px;
-border-radius:50%;
-font-size:22px;
-text-decoration:none;
-}
+/* LOGIN */
 
-.pixBox{
+.loginBox{
 display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
 background:white;
-padding:20px;
-margin-top:10px;
+padding:30px;
+box-shadow:0 0 20px rgba(0,0,0,0.3);
 border-radius:10px;
+}
+
+.loginBox input{
+width:100%;
+padding:10px;
+margin:10px 0;
 }
 
 </style>
@@ -110,79 +159,110 @@ border-radius:10px;
 
 <body>
 
-<header>KRSTORW</header>
+<header>
+
+<div class="logo">KRSTORW</div>
+
+<div class="search">
+<input placeholder="Buscar produtos...">
+</div>
+
+<div class="icons">
+<span onclick="abrirLogin()">👤</span>
+<span onclick="abrirCarrinho()">🛒</span>
+</div>
+
+</header>
 
 <div class="banner">
-Nova Coleção
+Nova Coleção KRSTORW
 </div>
+
+<div class="titulo">Produtos</div>
 
 <div class="produtos">
 
 <div class="produto">
 <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab">
 <h3>Camiseta Street</h3>
-<p>R$ 79</p>
-<button onclick="addCarrinho('Camiseta Street',79)">Adicionar</button>
+<p>R$79</p>
+<button onclick="addCarrinho('Camiseta Street',79)">Comprar</button>
 </div>
 
 <div class="produto">
 <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb">
 <h3>Camiseta Black</h3>
-<p>R$ 89</p>
-<button onclick="addCarrinho('Camiseta Black',89)">Adicionar</button>
+<p>R$89</p>
+<button onclick="addCarrinho('Camiseta Black',89)">Comprar</button>
 </div>
 
 <div class="produto">
 <img src="https://images.unsplash.com/photo-1520975922284-4d5aeb2a2d4c">
 <h3>Camiseta White</h3>
-<p>R$ 69</p>
-<button onclick="addCarrinho('Camiseta White',69)">Adicionar</button>
+<p>R$69</p>
+<button onclick="addCarrinho('Camiseta White',69)">Comprar</button>
 </div>
 
 <div class="produto">
 <img src="https://images.unsplash.com/photo-1520975693416-35a6a3c36b33">
 <h3>Moletom Urban</h3>
-<p>R$ 159</p>
-<button onclick="addCarrinho('Moletom Urban',159)">Adicionar</button>
+<p>R$159</p>
+<button onclick="addCarrinho('Moletom Urban',159)">Comprar</button>
 </div>
 
 <div class="produto">
 <img src="https://images.unsplash.com/photo-1520975922343-9b9c6e5d73c6">
 <h3>Moletom Basic</h3>
-<p>R$ 139</p>
-<button onclick="addCarrinho('Moletom Basic',139)">Adicionar</button>
+<p>R$139</p>
+<button onclick="addCarrinho('Moletom Basic',139)">Comprar</button>
 </div>
 
 <div class="produto">
 <img src="https://images.unsplash.com/photo-1520975922259-99e0f1f0c8c2">
 <h3>Camiseta KRSTORW</h3>
-<p>R$ 99</p>
-<button onclick="addCarrinho('Camiseta KRSTORW',99)">Adicionar</button>
+<p>R$99</p>
+<button onclick="addCarrinho('Camiseta KRSTORW',99)">Comprar</button>
 </div>
 
 </div>
 
-<div class="carrinho">
-<h3>Carrinho</h3>
+<!-- CARRINHO -->
+
+<div class="carrinho" id="carrinho">
+
+<h2>Carrinho</h2>
 
 <div id="lista"></div>
 
 <p>Total: R$ <span id="total">0</span></p>
 
-<button onclick="pagarPix()">Pagar no PIX</button>
+<h3>Dados do Cliente</h3>
 
-<button onclick="pagarCartao()">Pagar no Cartão</button>
+<input placeholder="Nome completo">
+<input placeholder="CPF">
+<input placeholder="Telefone">
+<input placeholder="Email">
+<input placeholder="CEP">
+<input placeholder="Endereço">
+<input placeholder="Número">
+<input placeholder="Apartamento">
 
-<div class="pixBox" id="pixBox">
-<h4>Pagamento PIX</h4>
-<p id="codigoPix"></p>
+<button onclick="finalizar()">Finalizar Compra</button>
+
 </div>
 
-</div>
+<!-- LOGIN -->
 
-<a class="whatsapp" 
-href="https://wa.me/5511999999999?text=Olá%20quero%20mais%20informações%20sobre%20a%20loja%20KRSTORW"
-target="_blank">💬</a>
+<div class="loginBox" id="login">
+
+<h2>Login</h2>
+
+<input placeholder="Email">
+<input placeholder="Senha" type="password">
+
+<button onclick="fecharLogin()">Entrar</button>
+
+</div>
 
 <script>
 
@@ -197,15 +277,7 @@ total+=preco
 
 mostrar()
 
-}
-
-function remover(index){
-
-total-=carrinho[index].preco
-
-carrinho.splice(index,1)
-
-mostrar()
+abrirCarrinho()
 
 }
 
@@ -235,27 +307,37 @@ document.getElementById("total").innerText=total
 
 }
 
-function pagarPix(){
+function remover(index){
 
-let codigo="00020126360014BR.GOV.BCB.PIX0114SEUPIXAQUI5204000053039865405"+total+"5802BR"
+total-=carrinho[index].preco
 
-document.getElementById("codigoPix").innerText=codigo
+carrinho.splice(index,1)
 
-document.getElementById("pixBox").style.display="block"
+mostrar()
+
+}
+
+function abrirCarrinho(){
+
+document.getElementById("carrinho").classList.add("active")
 
 }
 
-function pagarCartao(){
+function abrirLogin(){
 
-if(total>=150){
-
-alert("Compra pode ser parcelada em até 3x")
-
-}else{
-
-alert("Pagamento aprovado no cartão")
+document.getElementById("login").style.display="block"
 
 }
+
+function fecharLogin(){
+
+document.getElementById("login").style.display="none"
+
+}
+
+function finalizar(){
+
+alert("Pedido recebido! Em breve enviaremos o rastreamento.")
 
 }
 
