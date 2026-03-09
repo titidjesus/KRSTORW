@@ -2,11 +2,12 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Loja de Roupas</title>
+<title>KRSTORW</title>
 
 <style>
+
 body{
-font-family:Arial;
+font-family: Arial;
 margin:0;
 background:#f5f5f5;
 }
@@ -14,33 +15,53 @@ background:#f5f5f5;
 header{
 background:black;
 color:white;
-text-align:center;
 padding:20px;
+text-align:center;
+font-size:28px;
+font-weight:bold;
+}
+
+.banner{
+width:100%;
+height:350px;
+background:url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b') center/cover;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:40px;
+font-weight:bold;
 }
 
 .produtos{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:20px;
-padding:20px;
+padding:40px;
 }
 
 .produto{
 background:white;
-padding:15px;
+padding:20px;
 border-radius:10px;
 text-align:center;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.produto img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:8px;
 }
 
 button{
+padding:10px 20px;
+border:none;
 background:black;
 color:white;
-border:none;
-padding:10px;
-margin-top:10px;
 cursor:pointer;
-border-radius:5px;
+margin-top:10px;
 }
 
 button:hover{
@@ -54,177 +75,185 @@ top:20px;
 background:white;
 padding:20px;
 border-radius:10px;
-width:250px;
 box-shadow:0 0 10px rgba(0,0,0,0.2);
+width:250px;
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
 }
 
 .whatsapp{
 position:fixed;
 bottom:20px;
 right:20px;
+background:#25D366;
+color:white;
+padding:15px;
+border-radius:50%;
+font-size:22px;
+text-decoration:none;
 }
 
-.whatsapp img{
-width:60px;
-}
-
-.pagamento{
+.pixBox{
+display:none;
+background:white;
+padding:20px;
 margin-top:10px;
+border-radius:10px;
 }
-</style>
 
+</style>
 </head>
 
 <body>
 
-<header>
-<h1>Minha Loja</h1>
-</header>
+<header>KRSTORW</header>
+
+<div class="banner">
+Nova Coleção
+</div>
 
 <div class="produtos">
 
 <div class="produto">
-<h3>Camiseta Básica</h3>
-<p>R$ 49.90</p>
-<button onclick="addCarrinho('Camiseta Básica',49.90)">Adicionar</button>
+<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab">
+<h3>Camiseta Street</h3>
+<p>R$ 79</p>
+<button onclick="addCarrinho('Camiseta Street',79)">Adicionar</button>
 </div>
 
 <div class="produto">
-<h3>Moletom</h3>
-<p>R$ 120.00</p>
-<button onclick="addCarrinho('Moletom',120)">Adicionar</button>
+<img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb">
+<h3>Camiseta Black</h3>
+<p>R$ 89</p>
+<button onclick="addCarrinho('Camiseta Black',89)">Adicionar</button>
 </div>
 
 <div class="produto">
-<h3>Calça Jeans</h3>
-<p>R$ 99.90</p>
-<button onclick="addCarrinho('Calça Jeans',99.90)">Adicionar</button>
+<img src="https://images.unsplash.com/photo-1520975922284-4d5aeb2a2d4c">
+<h3>Camiseta White</h3>
+<p>R$ 69</p>
+<button onclick="addCarrinho('Camiseta White',69)">Adicionar</button>
 </div>
 
 <div class="produto">
-<h3>Camisa Social</h3>
-<p>R$ 89.90</p>
-<button onclick="addCarrinho('Camisa Social',89.90)">Adicionar</button>
+<img src="https://images.unsplash.com/photo-1520975693416-35a6a3c36b33">
+<h3>Moletom Urban</h3>
+<p>R$ 159</p>
+<button onclick="addCarrinho('Moletom Urban',159)">Adicionar</button>
 </div>
 
 <div class="produto">
-<h3>Jaqueta</h3>
-<p>R$ 150.00</p>
-<button onclick="addCarrinho('Jaqueta',150)">Adicionar</button>
+<img src="https://images.unsplash.com/photo-1520975922343-9b9c6e5d73c6">
+<h3>Moletom Basic</h3>
+<p>R$ 139</p>
+<button onclick="addCarrinho('Moletom Basic',139)">Adicionar</button>
 </div>
 
 <div class="produto">
-<h3>Bermuda</h3>
-<p>R$ 59.90</p>
-<button onclick="addCarrinho('Bermuda',59.90)">Adicionar</button>
+<img src="https://images.unsplash.com/photo-1520975922259-99e0f1f0c8c2">
+<h3>Camiseta KRSTORW</h3>
+<p>R$ 99</p>
+<button onclick="addCarrinho('Camiseta KRSTORW',99)">Adicionar</button>
 </div>
 
 </div>
 
 <div class="carrinho">
-
 <h3>Carrinho</h3>
 
-<ul id="lista"></ul>
+<div id="lista"></div>
 
 <p>Total: R$ <span id="total">0</span></p>
 
-<div class="pagamento">
+<button onclick="pagarPix()">Pagar no PIX</button>
 
-<select id="metodo">
-<option value="">Escolher pagamento</option>
-<option value="pix">PIX</option>
-<option value="cartao">Cartão</option>
-</select>
+<button onclick="pagarCartao()">Pagar no Cartão</button>
 
-<button onclick="finalizar()">Finalizar</button>
-
+<div class="pixBox" id="pixBox">
+<h4>Pagamento PIX</h4>
+<p id="codigoPix"></p>
 </div>
-
-<div id="pix"></div>
 
 </div>
 
 <a class="whatsapp" 
-href="https://wa.me/5511999999999?text=Olá%20tenho%20interesse%20em%20uma%20roupa%20da%20loja"
-target="_blank">
-
-<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
-
-</a>
+href="https://wa.me/5511999999999?text=Olá%20quero%20mais%20informações%20sobre%20a%20loja%20KRSTORW"
+target="_blank">💬</a>
 
 <script>
 
-let carrinho = []
-let total = 0
+let carrinho=[]
+let total=0
 
 function addCarrinho(nome,preco){
 
 carrinho.push({nome,preco})
 
-total += preco
+total+=preco
 
-atualizar()
+mostrar()
 
 }
 
 function remover(index){
 
-total -= carrinho[index].preco
+total-=carrinho[index].preco
 
 carrinho.splice(index,1)
 
-atualizar()
+mostrar()
 
 }
 
-function atualizar(){
+function mostrar(){
 
-let lista = document.getElementById("lista")
+let lista=document.getElementById("lista")
 
 lista.innerHTML=""
 
-carrinho.forEach((item,i)=>{
+carrinho.forEach((item,index)=>{
 
-lista.innerHTML += `
-<li>
-${item.nome} - R$${item.preco}
-<button onclick="remover(${i})">X</button>
-</li>
+lista.innerHTML+=`
+
+<div class="item">
+
+${item.nome}
+
+<button onclick="remover(${index})">X</button>
+
+</div>
+
 `
 
 })
 
-document.getElementById("total").innerText = total.toFixed(2)
+document.getElementById("total").innerText=total
 
 }
 
-function finalizar(){
+function pagarPix(){
 
-let metodo = document.getElementById("metodo").value
+let codigo="00020126360014BR.GOV.BCB.PIX0114SEUPIXAQUI5204000053039865405"+total+"5802BR"
 
-if(metodo=="pix"){
+document.getElementById("codigoPix").innerText=codigo
 
-let chave="SEUPIX"
-
-document.getElementById("pix").innerHTML =
-
-`<p>PIX copia e cola:</p>
-<textarea rows="3" cols="25">${chave}</textarea>`
+document.getElementById("pixBox").style.display="block"
 
 }
 
-if(metodo=="cartao"){
+function pagarCartao(){
 
-if(total >=150){
+if(total>=150){
 
-alert("Pagamento em até 3x disponível!")
+alert("Compra pode ser parcelada em até 3x")
 
 }else{
 
-alert("Pagamento no cartão à vista")
-
-}
+alert("Pagamento aprovado no cartão")
 
 }
 
