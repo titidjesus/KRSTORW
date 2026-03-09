@@ -159,6 +159,13 @@ display:none;
 text-align:center;
 }
 
+/* CARTÃO */
+
+#cartaoArea{
+display:none;
+margin-top:20px;
+}
+
 /* RASTREAMENTO */
 
 .rastreamento{
@@ -288,6 +295,7 @@ Nova Coleção KRSTORW
 <p>R$ <span id="total">0</span></p>
 
 <button onclick="gerarPix()">Pagar com PIX</button>
+<button onclick="mostrarCartao()">Pagar com Cartão</button>
 
 <div id="pixArea">
 
@@ -296,6 +304,26 @@ Nova Coleção KRSTORW
 <img id="qrPix" width="200">
 
 <p id="codigoPix"></p>
+
+</div>
+
+<div id="cartaoArea">
+
+<h3>Pagamento com Cartão</h3>
+
+<input id="nomeCartao" placeholder="Nome no cartão">
+
+<input id="numeroCartao" placeholder="Número do cartão">
+
+<input id="validadeCartao" placeholder="Validade (MM/AA)">
+
+<input id="cvvCartao" placeholder="CVV">
+
+<select id="parcelasCartao">
+<option value="1">1x sem juros</option>
+</select>
+
+<button onclick="pagarCartao()">Finalizar pagamento</button>
 
 </div>
 
@@ -335,65 +363,40 @@ let subtotal=0
 let frete=0
 
 function addCarrinho(nome,preco){
-
 carrinho.push({nome,preco})
-
 subtotal+=preco
-
 mostrar()
-
 abrirCarrinho()
-
 }
 
 function mostrar(){
-
 let lista=document.getElementById("lista")
-
 lista.innerHTML=""
 
 carrinho.forEach((item,index)=>{
-
 lista.innerHTML+=`
-
 <div class="item">
-
 ${item.nome} - R$${item.preco}
-
 <button onclick="remover(${index})">X</button>
-
-</div>
-
-`
-
+</div>`
 })
 
 document.getElementById("subtotal").innerText=subtotal
-
 atualizarTotal()
-
 }
 
 function remover(index){
-
 subtotal-=carrinho[index].preco
-
 carrinho.splice(index,1)
-
 mostrar()
-
 }
 
 function abrirCarrinho(){
-
 document.getElementById("carrinho").classList.add("active")
-
 }
 
 function fecharCarrinho(){
-
 document.getElementById("carrinho").classList.remove("active")
-
 }
 
 async function calcularFreteReal(){
@@ -401,69 +404,96 @@ async function calcularFreteReal(){
 let cep=document.getElementById("cepFrete").value
 
 if(cep.length<8){
-
 alert("Digite um CEP válido")
-
 return
-
 }
 
 let resposta=await fetch(`https://viacep.com.br/ws/${cep}/json/`)
-
 let dados=await resposta.json()
 
 if(dados.uf=="SP"){
-
 frete=15
-
 }else{
-
 frete=25
-
 }
 
 document.getElementById("frete").innerText=frete
-
 atualizarTotal()
 
 }
 
 function atualizarTotal(){
-
 let total=subtotal+frete
-
 document.getElementById("total").innerText=total
-
 }
 
 function gerarPix(){
 
 let total=document.getElementById("total").innerText
-
 let codigo=`Pagamento KRSTORW R$${total}`
-
 let qr=`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${codigo}`
 
 document.getElementById("qrPix").src=qr
-
 document.getElementById("codigoPix").innerText=codigo
-
 document.getElementById("pixArea").style.display="block"
 
 }
 
-function gerarPedido(){
+function mostrarCartao(){
 
-return "KR"+Math.floor(Math.random()*1000000)
+document.getElementById("cartaoArea").style.display="block"
+
+let total=parseFloat(document.getElementById("total").innerText)
+let parcelas=document.getElementById("parcelasCartao")
+
+parcelas.innerHTML=""
+
+if(total>=150){
+
+for(let i=1;i<=3;i++){
+
+let valor=(total/i).toFixed(2)
+
+parcelas.innerHTML+=`<option value="${i}">
+${i}x de R$${valor}
+</option>`
 
 }
 
-function finalizar(){
+}else{
+
+parcelas.innerHTML=`<option value="1">
+1x de R$${total}
+</option>`
+
+}
+
+}
+
+function pagarCartao(){
+
+let nome=document.getElementById("nomeCartao").value
+let numero=document.getElementById("numeroCartao").value
+let validade=document.getElementById("validadeCartao").value
+let cvv=document.getElementById("cvvCartao").value
+
+if(nome=="" || numero=="" || validade=="" || cvv==""){
+alert("Preencha todos os dados do cartão")
+return
+}
 
 let pedido=gerarPedido()
+alert("Pagamento aprovado! Pedido Nº "+pedido)
 
+}
+
+function gerarPedido(){
+return "KR"+Math.floor(Math.random()*1000000)
+}
+
+function finalizar(){
+let pedido=gerarPedido()
 alert("Pedido confirmado! Nº: "+pedido)
-
 }
 
 function avaliar(el){
@@ -471,15 +501,11 @@ function avaliar(el){
 let estrelas=el.parentNode.children
 
 for(let i=0;i<estrelas.length;i++){
-
 estrelas[i].style.color="gray"
-
 }
 
 for(let i=0;i<=Array.from(estrelas).indexOf(el);i++){
-
 estrelas[i].style.color="gold"
-
 }
 
 }
@@ -489,7 +515,6 @@ const busca=document.querySelector(".search input")
 busca.addEventListener("keyup",function(){
 
 let texto=this.value.toLowerCase()
-
 let produtos=document.querySelectorAll(".produto")
 
 produtos.forEach(p=>{
@@ -505,7 +530,6 @@ p.style.display=nome.includes(texto)?"block":"none"
 function filtrarPreco(){
 
 let valor=document.getElementById("filtroPreco").value
-
 let produtos=document.querySelectorAll(".produto")
 
 produtos.forEach(p=>{
@@ -513,13 +537,9 @@ produtos.forEach(p=>{
 let preco=p.querySelector("p").innerText
 
 if(valor=="todos"){
-
 p.style.display="block"
-
 }else{
-
 p.style.display=(preco<=valor)?"block":"none"
-
 }
 
 })
