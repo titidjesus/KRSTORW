@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <title>KRSTORW</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 
 *{
@@ -49,7 +51,7 @@ border:none;
 display:flex;
 gap:20px;
 cursor:pointer;
-font-size:20px;
+font-size:22px;
 }
 
 /* BANNER */
@@ -65,13 +67,18 @@ font-size:48px;
 font-weight:bold;
 }
 
-/* PRODUTOS */
+/* FILTRO */
 
-.titulo{
+.filtro{
 text-align:center;
-margin:40px;
-font-size:30px;
+margin-top:20px;
 }
+
+.filtro select{
+padding:10px;
+}
+
+/* PRODUTOS */
 
 .produtos{
 display:grid;
@@ -109,7 +116,12 @@ cursor:pointer;
 margin-top:10px;
 }
 
-/* CARRINHO LATERAL */
+.avaliacao span{
+cursor:pointer;
+font-size:18px;
+}
+
+/* CARRINHO */
 
 .carrinho{
 position:fixed;
@@ -134,24 +146,49 @@ justify-content:space-between;
 margin:10px 0;
 }
 
-/* LOGIN */
-
-.loginBox{
-display:none;
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:white;
-padding:30px;
-box-shadow:0 0 20px rgba(0,0,0,0.3);
-border-radius:10px;
+input{
+width:100%;
+padding:8px;
+margin:6px 0;
 }
 
-.loginBox input{
+/* PIX */
+
+#pixArea{
+display:none;
+text-align:center;
+}
+
+/* RASTREAMENTO */
+
+.rastreamento{
+padding:40px;
+text-align:center;
+background:white;
+margin-top:30px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+header{
+flex-direction:column;
+gap:10px;
+}
+
+.search{
 width:100%;
-padding:10px;
-margin:10px 0;
+}
+
+.produtos{
+grid-template-columns:1fr;
+}
+
+.carrinho{
+width:100%;
+}
+
 }
 
 </style>
@@ -168,7 +205,6 @@ margin:10px 0;
 </div>
 
 <div class="icons">
-<span onclick="abrirLogin()">👤</span>
 <span onclick="abrirCarrinho()">🛒</span>
 </div>
 
@@ -178,50 +214,50 @@ margin:10px 0;
 Nova Coleção KRSTORW
 </div>
 
-<div class="titulo">Produtos</div>
+<div class="filtro">
+
+<select id="filtroPreco" onchange="filtrarPreco()">
+
+<option value="todos">Todos</option>
+<option value="100">Até R$100</option>
+<option value="200">Até R$200</option>
+
+</select>
+
+</div>
 
 <div class="produtos">
 
 <div class="produto">
 <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab">
 <h3>Camiseta Street</h3>
-<p>R$79</p>
+<p>79</p>
+
+<div class="avaliacao">
+<span onclick="avaliar(this)">⭐</span>
+<span onclick="avaliar(this)">⭐</span>
+<span onclick="avaliar(this)">⭐</span>
+<span onclick="avaliar(this)">⭐</span>
+<span onclick="avaliar(this)">⭐</span>
+</div>
+
 <button onclick="addCarrinho('Camiseta Street',79)">Comprar</button>
 </div>
 
 <div class="produto">
 <img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb">
 <h3>Camiseta Black</h3>
-<p>R$89</p>
+<p>89</p>
+
+<div class="avaliacao">
+<span onclick="avaliar(this)">⭐</span>
+<span onclick="avaliar(this)">⭐</span>
+<span onclick="avaliar(this)">⭐</span>
+<span onclick="avaliar(this)">⭐</span>
+<span onclick="avaliar(this)">⭐</span>
+</div>
+
 <button onclick="addCarrinho('Camiseta Black',89)">Comprar</button>
-</div>
-
-<div class="produto">
-<img src="https://images.unsplash.com/photo-1520975922284-4d5aeb2a2d4c">
-<h3>Camiseta White</h3>
-<p>R$69</p>
-<button onclick="addCarrinho('Camiseta White',69)">Comprar</button>
-</div>
-
-<div class="produto">
-<img src="https://images.unsplash.com/photo-1520975693416-35a6a3c36b33">
-<h3>Moletom Urban</h3>
-<p>R$159</p>
-<button onclick="addCarrinho('Moletom Urban',159)">Comprar</button>
-</div>
-
-<div class="produto">
-<img src="https://images.unsplash.com/photo-1520975922343-9b9c6e5d73c6">
-<h3>Moletom Basic</h3>
-<p>R$139</p>
-<button onclick="addCarrinho('Moletom Basic',139)">Comprar</button>
-</div>
-
-<div class="produto">
-<img src="https://images.unsplash.com/photo-1520975922259-99e0f1f0c8c2">
-<h3>Camiseta KRSTORW</h3>
-<p>R$99</p>
-<button onclick="addCarrinho('Camiseta KRSTORW',99)">Comprar</button>
 </div>
 
 </div>
@@ -230,11 +266,38 @@ Nova Coleção KRSTORW
 
 <div class="carrinho" id="carrinho">
 
+<div style="display:flex;justify-content:space-between">
 <h2>Carrinho</h2>
+<button onclick="fecharCarrinho()">X</button>
+</div>
 
 <div id="lista"></div>
 
-<p>Total: R$ <span id="total">0</span></p>
+<p>Subtotal: R$ <span id="subtotal">0</span></p>
+
+<h3>Frete</h3>
+
+<input id="cepFrete" placeholder="Digite seu CEP">
+
+<button onclick="calcularFreteReal()">Calcular Frete</button>
+
+<p>Frete: R$ <span id="frete">0</span></p>
+
+<h3>Total</h3>
+
+<p>R$ <span id="total">0</span></p>
+
+<button onclick="gerarPix()">Pagar com PIX</button>
+
+<div id="pixArea">
+
+<h3>Pagamento PIX</h3>
+
+<img id="qrPix" width="200">
+
+<p id="codigoPix"></p>
+
+</div>
 
 <h3>Dados do Cliente</h3>
 
@@ -251,29 +314,31 @@ Nova Coleção KRSTORW
 
 </div>
 
-<!-- LOGIN -->
+<!-- RASTREAMENTO -->
 
-<div class="loginBox" id="login">
+<div class="rastreamento">
 
-<h2>Login</h2>
+<h2>Rastrear Pedido</h2>
 
-<input placeholder="Email">
-<input placeholder="Senha" type="password">
+<input id="codigoPedido" placeholder="Digite seu número de pedido">
 
-<button onclick="fecharLogin()">Entrar</button>
+<button onclick="rastrear()">Rastrear</button>
+
+<p id="statusPedido"></p>
 
 </div>
 
 <script>
 
 let carrinho=[]
-let total=0
+let subtotal=0
+let frete=0
 
 function addCarrinho(nome,preco){
 
 carrinho.push({nome,preco})
 
-total+=preco
+subtotal+=preco
 
 mostrar()
 
@@ -293,7 +358,7 @@ lista.innerHTML+=`
 
 <div class="item">
 
-${item.nome}
+${item.nome} - R$${item.preco}
 
 <button onclick="remover(${index})">X</button>
 
@@ -303,13 +368,15 @@ ${item.nome}
 
 })
 
-document.getElementById("total").innerText=total
+document.getElementById("subtotal").innerText=subtotal
+
+atualizarTotal()
 
 }
 
 function remover(index){
 
-total-=carrinho[index].preco
+subtotal-=carrinho[index].preco
 
 carrinho.splice(index,1)
 
@@ -323,21 +390,147 @@ document.getElementById("carrinho").classList.add("active")
 
 }
 
-function abrirLogin(){
+function fecharCarrinho(){
 
-document.getElementById("login").style.display="block"
+document.getElementById("carrinho").classList.remove("active")
 
 }
 
-function fecharLogin(){
+async function calcularFreteReal(){
 
-document.getElementById("login").style.display="none"
+let cep=document.getElementById("cepFrete").value
+
+if(cep.length<8){
+
+alert("Digite um CEP válido")
+
+return
+
+}
+
+let resposta=await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+
+let dados=await resposta.json()
+
+if(dados.uf=="SP"){
+
+frete=15
+
+}else{
+
+frete=25
+
+}
+
+document.getElementById("frete").innerText=frete
+
+atualizarTotal()
+
+}
+
+function atualizarTotal(){
+
+let total=subtotal+frete
+
+document.getElementById("total").innerText=total
+
+}
+
+function gerarPix(){
+
+let total=document.getElementById("total").innerText
+
+let codigo=`Pagamento KRSTORW R$${total}`
+
+let qr=`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${codigo}`
+
+document.getElementById("qrPix").src=qr
+
+document.getElementById("codigoPix").innerText=codigo
+
+document.getElementById("pixArea").style.display="block"
+
+}
+
+function gerarPedido(){
+
+return "KR"+Math.floor(Math.random()*1000000)
 
 }
 
 function finalizar(){
 
-alert("Pedido recebido! Em breve enviaremos o rastreamento.")
+let pedido=gerarPedido()
+
+alert("Pedido confirmado! Nº: "+pedido)
+
+}
+
+function avaliar(el){
+
+let estrelas=el.parentNode.children
+
+for(let i=0;i<estrelas.length;i++){
+
+estrelas[i].style.color="gray"
+
+}
+
+for(let i=0;i<=Array.from(estrelas).indexOf(el);i++){
+
+estrelas[i].style.color="gold"
+
+}
+
+}
+
+const busca=document.querySelector(".search input")
+
+busca.addEventListener("keyup",function(){
+
+let texto=this.value.toLowerCase()
+
+let produtos=document.querySelectorAll(".produto")
+
+produtos.forEach(p=>{
+
+let nome=p.innerText.toLowerCase()
+
+p.style.display=nome.includes(texto)?"block":"none"
+
+})
+
+})
+
+function filtrarPreco(){
+
+let valor=document.getElementById("filtroPreco").value
+
+let produtos=document.querySelectorAll(".produto")
+
+produtos.forEach(p=>{
+
+let preco=p.querySelector("p").innerText
+
+if(valor=="todos"){
+
+p.style.display="block"
+
+}else{
+
+p.style.display=(preco<=valor)?"block":"none"
+
+}
+
+})
+
+}
+
+function rastrear(){
+
+let codigo=document.getElementById("codigoPedido").value
+
+document.getElementById("statusPedido").innerText="Pedido "+codigo+" está em transporte."
 
 }
 
