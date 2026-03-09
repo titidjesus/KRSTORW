@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>KRSTORW</title>
 
+<head>
+
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KRSTORW</title>
 
 <style>
 
@@ -19,21 +21,19 @@ body{
 background:#f5f5f5;
 }
 
-/* HEADER */
-
 header{
 background:black;
 color:white;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:20px 40px;
+padding:20px;
 }
 
 .logo{
-font-size:30px;
+font-size:26px;
 font-weight:bold;
-letter-spacing:4px;
+letter-spacing:3px;
 }
 
 .search{
@@ -48,8 +48,6 @@ border-radius:20px;
 border:none;
 }
 
-/* sugestões */
-
 #sugestoes{
 position:absolute;
 background:white;
@@ -58,7 +56,6 @@ top:40px;
 border-radius:10px;
 box-shadow:0 4px 10px rgba(0,0,0,0.2);
 display:none;
-z-index:100;
 }
 
 .sugestao{
@@ -67,30 +64,24 @@ cursor:pointer;
 }
 
 .sugestao:hover{
-background:#f0f0f0;
+background:#eee;
 }
 
 .icons{
-display:flex;
-gap:20px;
-cursor:pointer;
 font-size:22px;
+cursor:pointer;
 }
 
-/* BANNER */
-
 .banner{
-height:420px;
+height:400px;
 background:url("https://images.unsplash.com/photo-1441986300917-64674bd600d8") center/cover;
 display:flex;
 align-items:center;
 justify-content:center;
 color:white;
-font-size:48px;
+font-size:40px;
 font-weight:bold;
 }
-
-/* PRODUTOS */
 
 .produtos{
 display:grid;
@@ -104,17 +95,12 @@ background:white;
 padding:20px;
 border-radius:10px;
 text-align:center;
-transition:0.3s;
 box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
-
-.produto:hover{
-transform:translateY(-5px);
 }
 
 .produto img{
 width:100%;
-height:220px;
+height:260px;
 object-fit:cover;
 border-radius:8px;
 }
@@ -130,15 +116,12 @@ margin-top:10px;
 
 .avaliacao span{
 cursor:pointer;
-font-size:18px;
 }
-
-/* CARRINHO */
 
 .carrinho{
 position:fixed;
 top:0;
-right:-400px;
+right:-350px;
 width:350px;
 height:100%;
 background:white;
@@ -164,51 +147,8 @@ padding:8px;
 margin:6px 0;
 }
 
-/* PIX */
-
-#pixArea{
-display:none;
-text-align:center;
-}
-
-#cartaoArea{
-display:none;
-margin-top:20px;
-}
-
-/* RASTREAMENTO */
-
-.rastreamento{
-padding:40px;
-text-align:center;
-background:white;
-margin-top:30px;
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-header{
-flex-direction:column;
-gap:10px;
-}
-
-.search{
-width:100%;
-}
-
-.produtos{
-grid-template-columns:1fr;
-}
-
-.carrinho{
-width:100%;
-}
-
-}
-
 </style>
+
 </head>
 
 <body>
@@ -218,6 +158,7 @@ width:100%;
 <div class="logo">KRSTORW</div>
 
 <div class="search">
+
 <input id="busca" placeholder="Buscar produtos...">
 
 <div id="sugestoes"></div>
@@ -225,21 +166,31 @@ width:100%;
 </div>
 
 <div class="icons">
+
 <span onclick="abrirCarrinho()">🛒</span>
+
 </div>
 
 </header>
 
 <div class="banner">
+
 Nova Coleção KRSTORW
+
 </div>
+
 
 <div class="produtos">
 
+<!-- CAMISETA -->
+
 <div class="produto">
-<img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab">
-<h3>Camiseta Street</h3>
-<p>79</p>
+
+<img src="imagens/camiseta-branca.jpg">
+
+<h3>Camiseta Branca Premium</h3>
+
+<p>R$129</p>
 
 <div class="avaliacao">
 <span onclick="avaliar(this)">⭐</span>
@@ -249,13 +200,22 @@ Nova Coleção KRSTORW
 <span onclick="avaliar(this)">⭐</span>
 </div>
 
-<button onclick="addCarrinho('Camiseta Street',79)">Comprar</button>
+<button onclick="addCarrinho('Camiseta Branca Premium',129)">
+Comprar
+</button>
+
 </div>
 
+
+<!-- CALÇA -->
+
 <div class="produto">
-<img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb">
-<h3>Camiseta Black</h3>
-<p>89</p>
+
+<img src="imagens/calca-preta.jpg">
+
+<h3>Calça Skinny Preta</h3>
+
+<p>R$179</p>
 
 <div class="avaliacao">
 <span onclick="avaliar(this)">⭐</span>
@@ -265,103 +225,101 @@ Nova Coleção KRSTORW
 <span onclick="avaliar(this)">⭐</span>
 </div>
 
-<button onclick="addCarrinho('Camiseta Black',89)">Comprar</button>
-</div>
+<button onclick="addCarrinho('Calça Skinny Preta',179)">
+Comprar
+</button>
 
 </div>
 
-<!-- CARRINHO -->
+</div>
+
 
 <div class="carrinho" id="carrinho">
 
-<div style="display:flex;justify-content:space-between">
 <h2>Carrinho</h2>
-<button onclick="fecharCarrinho()">X</button>
-</div>
 
 <div id="lista"></div>
 
 <p>Subtotal: R$ <span id="subtotal">0</span></p>
 
-<h3>Frete</h3>
-
-<input id="cepFrete" placeholder="Digite seu CEP">
-
-<button onclick="calcularFreteReal()">Calcular Frete</button>
-
-<p>Frete: R$ <span id="frete">0</span></p>
-
-<h3>Total</h3>
-
-<p>R$ <span id="total">0</span></p>
-
-<button onclick="gerarPix()">Pagar com PIX</button>
-<button onclick="mostrarCartao()">Pagar com Cartão</button>
-
-<div id="pixArea">
-
-<h3>Pagamento PIX</h3>
-
-<img id="qrPix" width="200">
-
-<p id="codigoPix"></p>
-
 </div>
 
-<div id="cartaoArea">
-
-<h3>Pagamento com Cartão</h3>
-
-<input id="nomeCartao" placeholder="Nome no cartão">
-<input id="numeroCartao" placeholder="Número do cartão">
-<input id="validadeCartao" placeholder="Validade (MM/AA)">
-<input id="cvvCartao" placeholder="CVV">
-
-<select id="parcelasCartao">
-<option value="1">1x sem juros</option>
-</select>
-
-<button onclick="pagarCartao()">Finalizar pagamento</button>
-
-</div>
-
-<h3>Dados do Cliente</h3>
-
-<input placeholder="Nome completo">
-<input placeholder="CPF">
-<input placeholder="Telefone">
-<input placeholder="Email">
-<input placeholder="CEP">
-<input placeholder="Endereço">
-<input placeholder="Número">
-<input placeholder="Apartamento">
-
-<button onclick="finalizar()">Finalizar Compra</button>
-
-</div>
-
-<div class="rastreamento">
-
-<h2>Rastrear Pedido</h2>
-
-<input id="codigoPedido" placeholder="Digite seu número de pedido">
-
-<button onclick="rastrear()">Rastrear</button>
-
-<p id="statusPedido"></p>
-
-</div>
 
 <script>
 
 let carrinho=[]
 let subtotal=0
-let frete=0
 
-let produtosLista=["Camiseta Street","Camiseta Black"]
+let produtosLista=[
+"Camiseta Branca Premium",
+"Calça Skinny Preta"
+]
 
-const busca=document.getElementById("busca")
-const sugestoes=document.getElementById("sugestoes")
+function addCarrinho(nome,preco){
+
+carrinho.push({nome,preco})
+
+subtotal+=preco
+
+mostrar()
+
+abrirCarrinho()
+
+}
+
+function mostrar(){
+
+let lista=document.getElementById("lista")
+
+lista.innerHTML=""
+
+carrinho.forEach((item,index)=>{
+
+lista.innerHTML+=`
+<div class="item">
+${item.nome} - R$${item.preco}
+<button onclick="remover(${index})">X</button>
+</div>
+`
+
+})
+
+document.getElementById("subtotal").innerText=subtotal
+
+}
+
+function remover(index){
+
+subtotal-=carrinho[index].preco
+
+carrinho.splice(index,1)
+
+mostrar()
+
+}
+
+function abrirCarrinho(){
+
+document.getElementById("carrinho").classList.add("active")
+
+}
+
+function avaliar(el){
+
+let estrelas=el.parentNode.children
+
+for(let i=0;i<estrelas.length;i++){
+estrelas[i].style.color="gray"
+}
+
+for(let i=0;i<=Array.from(estrelas).indexOf(el);i++){
+estrelas[i].style.color="gold"
+}
+
+}
+
+let busca=document.getElementById("busca")
+let sugestoes=document.getElementById("sugestoes")
 
 busca.addEventListener("input",function(){
 
@@ -399,149 +357,6 @@ sugestoes.appendChild(div)
 sugestoes.style.display="block"
 
 })
-
-function addCarrinho(nome,preco){
-carrinho.push({nome,preco})
-subtotal+=preco
-mostrar()
-abrirCarrinho()
-}
-
-function mostrar(){
-let lista=document.getElementById("lista")
-lista.innerHTML=""
-
-carrinho.forEach((item,index)=>{
-lista.innerHTML+=`
-<div class="item">
-${item.nome} - R$${item.preco}
-<button onclick="remover(${index})">X</button>
-</div>`
-})
-
-document.getElementById("subtotal").innerText=subtotal
-atualizarTotal()
-}
-
-function remover(index){
-subtotal-=carrinho[index].preco
-carrinho.splice(index,1)
-mostrar()
-}
-
-function abrirCarrinho(){
-document.getElementById("carrinho").classList.add("active")
-}
-
-function fecharCarrinho(){
-document.getElementById("carrinho").classList.remove("active")
-}
-
-async function calcularFreteReal(){
-
-let cep=document.getElementById("cepFrete").value
-
-if(cep.length<8){
-alert("Digite um CEP válido")
-return
-}
-
-let resposta=await fetch(`https://viacep.com.br/ws/${cep}/json/`)
-let dados=await resposta.json()
-
-if(dados.uf=="SP"){
-frete=15
-}else{
-frete=25
-}
-
-document.getElementById("frete").innerText=frete
-atualizarTotal()
-
-}
-
-function atualizarTotal(){
-let total=subtotal+frete
-document.getElementById("total").innerText=total
-}
-
-function gerarPix(){
-
-let total=document.getElementById("total").innerText
-let codigo=`Pagamento KRSTORW R$${total}`
-let qr=`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${codigo}`
-
-document.getElementById("qrPix").src=qr
-document.getElementById("codigoPix").innerText=codigo
-document.getElementById("pixArea").style.display="block"
-
-}
-
-function mostrarCartao(){
-
-document.getElementById("cartaoArea").style.display="block"
-
-let total=parseFloat(document.getElementById("total").innerText)
-let parcelas=document.getElementById("parcelasCartao")
-
-parcelas.innerHTML=""
-
-if(total>=150){
-
-for(let i=1;i<=3;i++){
-
-let valor=(total/i).toFixed(2)
-
-parcelas.innerHTML+=`<option>${i}x de R$${valor}</option>`
-
-}
-
-}else{
-
-parcelas.innerHTML=`<option>1x de R$${total}</option>`
-
-}
-
-}
-
-function pagarCartao(){
-
-let pedido=gerarPedido()
-
-alert("Pagamento aprovado! Pedido Nº "+pedido)
-
-}
-
-function gerarPedido(){
-return "KR"+Math.floor(Math.random()*1000000)
-}
-
-function finalizar(){
-let pedido=gerarPedido()
-alert("Pedido confirmado! Nº: "+pedido)
-}
-
-function avaliar(el){
-
-let estrelas=el.parentNode.children
-
-for(let i=0;i<estrelas.length;i++){
-estrelas[i].style.color="gray"
-}
-
-for(let i=0;i<=Array.from(estrelas).indexOf(el);i++){
-estrelas[i].style.color="gold"
-}
-
-}
-
-function rastrear(){
-
-let codigo=document.getElementById("codigoPedido").value
-
-document.getElementById("statusPedido").innerText="Pedido "+codigo+" está em transporte."
-
-}
 
 </script>
 
